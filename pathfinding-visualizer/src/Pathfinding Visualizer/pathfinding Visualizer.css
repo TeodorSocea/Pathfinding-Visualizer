@@ -1,0 +1,26 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 20vh 70vh 10vh;
+}
+.main-body{
+    display: grid;
+    grid-template-columns: 15px 1fr 15px;
+    grid-template-rows: 10px 1fr 10px;
+    row-gap: 2px;
+    column-gap: 2px;
+    grid-template-areas:
+    ". . . "
+    ". maingrid ."
+    ". . .";
+    background-color: cornflowerblue;
+}
+.main-grid{
+    grid-area: maingrid;
+    background-color: chartreuse;
+    display: grid;
+    grid-template-columns: repeat(50, 1fr);
+    grid-template-rows: repeat(15, 1fr);
+    row-gap: 2px;
+    column-gap: 2px;
+}

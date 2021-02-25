@@ -11,8 +11,13 @@ export default class PathfindingVisuzlizer extends Component{
 
     render(){
         return (
-            <div>Pog<Node></Node>
+            <div className="wrapper">
+                <header>Poggers</header>
+                <section className="main-body">
+                    <div className="main-grid"></div>
+                </section>
+                <footer>poggest</footer>
             </div>
-        );
+          );
     };
 };
