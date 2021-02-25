@@ -4,9 +4,19 @@
 .node:hover{
     background-color: black;
 }
-.node-start{
-    background-color: red;
+  
+.node-visited {
+    background-color: blueviolet;
 }
+
+.node-wall{
+    background-color: gray;
+}
+  
+.node-start {
+    background-color: green;
+}
+
 .node-finish{
     background-color: blue;
 }

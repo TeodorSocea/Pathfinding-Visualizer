@@ -20,7 +20,7 @@
     background-color: chartreuse;
     display: grid;
     grid-template-columns: repeat(50, 1fr);
-    grid-template-rows: repeat(15, 1fr);
+    grid-template-rows: repeat(20, 1fr);
     row-gap: 2px;
     column-gap: 2px;
 }
