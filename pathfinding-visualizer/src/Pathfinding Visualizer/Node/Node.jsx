@@ -9,6 +9,9 @@ export default class Node extends Component{
     };
 
     render(){
-        return <div className='node'>Poggers</div>;
+        const {isStart, isFinish, col, row} = this.props;
+        console.log(col, row);
+        const extraClassName = isStart ? 'node-start' : isFinish ? 'node-finish' : '';
+        return <div className={`node ${extraClassName}`}></div>;
     };
 };

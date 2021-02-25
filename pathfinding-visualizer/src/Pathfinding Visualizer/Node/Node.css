@@ -1,0 +1,12 @@
+.node{
+    background-color: white;
+}
+.node:hover{
+    background-color: black;
+}
+.node-start{
+    background-color: red;
+}
+.node-finish{
+    background-color: blue;
+}
