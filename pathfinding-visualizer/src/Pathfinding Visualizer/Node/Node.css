@@ -8,7 +8,9 @@
 .node-visited {
     background-color: blueviolet;
 }
-
+.node-shortest-path{
+    background-color: yellow;
+}
 .node-wall{
     background-color: gray;
 }

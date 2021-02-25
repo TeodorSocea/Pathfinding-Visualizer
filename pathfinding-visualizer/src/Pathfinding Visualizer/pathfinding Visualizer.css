@@ -17,7 +17,7 @@
 }
 .main-grid{
     grid-area: maingrid;
-    background-color: chartreuse;
+    background-color: cornflowerblue;
     display: grid;
     grid-template-columns: repeat(50, 1fr);
     grid-template-rows: repeat(20, 1fr);
