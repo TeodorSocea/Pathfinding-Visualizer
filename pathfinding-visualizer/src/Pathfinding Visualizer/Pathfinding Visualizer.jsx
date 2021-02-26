@@ -45,6 +45,28 @@ const getInitialGrid = () => {
     return newGrid;
   };
 
+  const toggleClassName = (element, toCheck) =>{
+    let className = element.className;
+    const reg = new RegExp(toCheck);
+    if(className.match(reg)){
+      className.replace(reg, "");
+    }
+    else{
+      className += " ";
+      className += toCheck;
+    }
+    return className;
+  }
+
+  const removeClassName = (className, toCheck) => {
+    let name = className;
+    const reg = new RegExp(toCheck);
+    if(name.match(reg)){
+      name.replace(reg, "");
+    }
+    return name;
+  }
+
 
 export default class PathfindingVisuzlizer extends Component{
 
@@ -70,6 +92,7 @@ export default class PathfindingVisuzlizer extends Component{
 
     handleMouseEnter(row, col) {
         if (!this.state.mouseIsPressed) return;
+        
         const newGrid = getNewGridWithWallToggled(this.state.grid, row, col);
         this.setState({grid: newGrid});
     }
@@ -82,9 +105,9 @@ export default class PathfindingVisuzlizer extends Component{
         for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
           setTimeout(() => {
             const node = nodesInShortestPathOrder[i];
-            document.getElementById(`node-${node.row}-${node.col}`).className =
-              'node node-shortest-path';
-          }, 50 * i);
+            const element = document.getElementById(`node-${node.row}-${node.col}`);
+            document.getElementById(`node-${node.row}-${node.col}`).className = toggleClassName(element, 'node-shortest-path');
+          }, 10 * i);
         }
       }
 
@@ -93,13 +116,14 @@ export default class PathfindingVisuzlizer extends Component{
           if (i === visitedNodesInOrder.length) {
             setTimeout(() => {
               this.animateShortestPath(nodesInShortestPathOrder);
-            }, 10 * i);
+            }, 1 * i/10);
             return;
           }else{
           setTimeout(() => {
             const node = visitedNodesInOrder[i];
-            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
-          }, 10 * i);}
+            const element = document.getElementById(`node-${node.row}-${node.col}`);
+            document.getElementById(`node-${node.row}-${node.col}`).className = toggleClassName(element, 'node-visited');
+          }, 1 * i/10);}
         }
       }
 
@@ -113,13 +137,51 @@ export default class PathfindingVisuzlizer extends Component{
         this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
     }
 
+    resetAll(){
+      const {grid} = this.state;
+      for(let row = 0; row < grid.length; row++){
+        for(let col = 0; col < grid[row].length; col++){
+          document.getElementById(`node-${row}-${col}`).className = 'node';
+          grid[row][col] = createNode(col, row);
+        }
+      }
+      this.setState({grid}, ()=> this.forceUpdate());
+    }
+
+    resetState(){
+      const grid = getInitialGrid();
+      this.setState({grid}, () => console.log(this.state));
+    }
+
+    resetNew(){
+      const {grid} = this.state;
+      const elements = document.getElementsByClassName("node");
+      console.log(elements[0]);
+      //console.log(elements);
+      for(let i = 0; i < elements.length; i-=-1){
+        elements[i].className = "node";
+        //element.className = 'node';
+      }
+      for(let row = 0; row < grid.length; row++){
+        for(let col = 0; col < grid[row].length; col++){
+          grid[row][col] = createNode(col, row);
+        }
+      }
+      this.componentDidMount();
+    }
+
+
+
     render(){
         const {grid, mouseIsPressed} = this.state;
         return (
-            <div className="wrapper">
+            <div className="wrapper" draggable="false">
                 <header>
                     <button onClick={()=>this.visualizeDijkstra()}>
                         Visualize
+                    </button>
+                    <button onClick={()=>this.resetState()}>
+                        Reset
                     </button>    
                     </header>
                 <section className="main-body">
@@ -128,6 +190,7 @@ export default class PathfindingVisuzlizer extends Component{
                             grid.map((row) => {
                                 return row.map((node, nodeId) => {
                                     const {col, row, isStart, isFinish, isWall, isVisited} = node;
+                                  
                                     return (
                                         <Node
                                         key = {nodeId}

@@ -26,6 +26,7 @@ export default class Node extends Component {
       : isWall
       ? 'node-wall'
       : '';
+    const testClassName = 'node-test';
 
     return (
       <div
