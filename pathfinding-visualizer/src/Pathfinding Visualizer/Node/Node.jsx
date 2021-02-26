@@ -5,6 +5,7 @@ import './Node.css';
 
 export default class Node extends Component {
   render() {
+    //console.log(this.props);
     const {
       col,
       isFinish,
@@ -15,7 +16,6 @@ export default class Node extends Component {
       onMouseUp,
       row,
       isVisited,
-      mouseIsPressed
     } = this.props;
     const extraClassName = isFinish
       ? 'node-finish'
@@ -32,9 +32,10 @@ export default class Node extends Component {
       <div
         id={`node-${row}-${col}`}
         className={`node ${extraClassName}`}
-        onMouseDown={() => onMouseDown(row, col)}
-        onMouseEnter={() => onMouseEnter(row, col)}
-        onMouseUp={() => onMouseUp()}></div>
+        //onMouseDown={() => onMouseDown(row, col)}
+        //onMouseEnter={() => onMouseEnter(row, col)}
+        //onMouseUp={() => onMouseUp()}
+        ></div>
     );
   }
 }

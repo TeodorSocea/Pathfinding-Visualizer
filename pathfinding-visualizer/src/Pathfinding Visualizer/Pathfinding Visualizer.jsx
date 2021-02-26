@@ -11,13 +11,13 @@ const FINISH_NODE_COL = 35;
 
 const createNode = (col, row) => {
     return {
-      col,
       row,
+      col,
       isStart: row === START_NODE_ROW && col === START_NODE_COL,
       isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-      distance: Infinity,
       isVisited: false,
       isWall: false,
+      distance: Infinity,
       previousNode: null,
     };
   }
@@ -116,14 +116,14 @@ export default class PathfindingVisuzlizer extends Component{
           if (i === visitedNodesInOrder.length) {
             setTimeout(() => {
               this.animateShortestPath(nodesInShortestPathOrder);
-            }, 1 * i/10);
+            }, 1 * i);
             return;
           }else{
           setTimeout(() => {
             const node = visitedNodesInOrder[i];
             const element = document.getElementById(`node-${node.row}-${node.col}`);
             document.getElementById(`node-${node.row}-${node.col}`).className = toggleClassName(element, 'node-visited');
-          }, 1 * i/10);}
+          }, 1 * i);}
         }
       }
 
@@ -135,6 +135,7 @@ export default class PathfindingVisuzlizer extends Component{
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
         //console.log(visitedNodesInOrder);
         this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+        this.setState({grid});
     }
 
     resetAll(){
@@ -187,29 +188,32 @@ export default class PathfindingVisuzlizer extends Component{
                 <section className="main-body">
                     <div className="main-grid">
                         {
-                            grid.map((row) => {
+                             grid.map((row) => {
                                 return row.map((node, nodeId) => {
-                                    const {col, row, isStart, isFinish, isWall, isVisited} = node;
-                                  
+                                    const {row, col, isStart, isFinish, isVisited, isWall, distance, previousNode} = node;
                                     return (
                                         <Node
-                                        key = {nodeId}
-                                        col = {col}
-                                        row = {row}
-                                        isStart = {isStart}
-                                        isFinish ={isFinish}
-                                        isWall = {isWall}
-                                        isVisited = {isVisited}
-                                        mouseIsPressed = {mouseIsPressed}
-                                        onMouseDown = { (row, col) => this.handleMouseDown(row, col)}
-                                        onMouseEnter = { (row, col) => this.handleMouseEnter(row, col)}
-                                        onMouseUp = { () => this.handleMouseUp()}
+                                          row={row}
+                                          col={col}
+                                          isStart={isStart}
+                                          isFinish={isFinish}
+                                          isVisited={isVisited}
+                                          isWall={isWall}
+                                          distance={distance}
+                                          previousNode={previousNode}
                                         >
                                         </Node>
                                     )
                                 })
+                            }) 
+                        }
+                        {
+                          grid.map((row) => {
+                            return row.map((node, nodeID) => {
+                              //console.log(node);
                             })
-                        }                                                
+                          })
+                        }                                        
                     </div>
                 </section>
                 <footer>poggest</footer>
