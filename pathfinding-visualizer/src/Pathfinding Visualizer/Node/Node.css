@@ -1,30 +1,26 @@
-.node{
-    background-color: white;
-    pointer-events: fill;
+.node {
+  background-color: white;
 }
-.node:hover{
-    background-color: black;
+.node:hover {
+  background-color: black;
 }
 
 .node-visited {
-    background-color: blueviolet;
+  background-color: blueviolet;
 }
 
-.node-wall{
-    background-color: gray;
+.node-shortest-path {
+  background-color: yellow;
 }
-  
+
+.node-wall {
+  background-color: gray;
+}
+
 .node-start {
-    background-color: green;
+  background-color: green;
 }
 
-.node-finish{
-    background-color: blue;
-}
-.node-shortest-path{
-    background-color: yellow;
-}
-
-.node-test{
-    background-color: pink;
+.node-finish {
+  background-color: blue;
 }
