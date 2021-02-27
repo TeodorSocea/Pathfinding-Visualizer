@@ -64,6 +64,7 @@ export default class PathfindingVisuzlizer extends Component {
     this.state = {
       grid: [],
       mouseIsPressed: false,
+      eraseMode: false,
     };
   }
 
@@ -73,29 +74,22 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseDown(row, col) {
-    this.state.grid = getNewGridWithWallToggled(this.state.grid, row, col);
-    const element = document.getElementById(`node-${row}-${col}`);
-    document.getElementById(`node-${row}-${col}`).className = toggleClassName(
-      element,
-      "node-wall"
-    );
+    this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
+    document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
     this.state.mouseIsPressed = true;
     //this.setState({ grid: newGrid, mouseIsPressed: true });
   }
 
   handleMouseEnter(row, col) {
     if (!this.state.mouseIsPressed) return;
-    this.state.grid = getNewGridWithWallToggled(this.state.grid, row, col);
+    this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
     const element = document.getElementById(`node-${row}-${col}`);
-    document.getElementById(`node-${row}-${col}`).className = toggleClassName(
-      element,
-      "node-wall"
-    );
+    document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
     //this.setState({ grid: newGrid });
   }
 
   handleMouseUp() {
-    this.setState({ mouseIsPressed: false });
+    this.setState({ grid: this.state.grid, mouseIsPressed: false });
   }
 
   animateShortestPath(nodesInShortestPathOrder, grid) {
@@ -118,7 +112,7 @@ export default class PathfindingVisuzlizer extends Component {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder, grid);
-        }, 1 * i);
+        }, 10 * i);
         return;
       } else {
         setTimeout(() => {
@@ -129,7 +123,7 @@ export default class PathfindingVisuzlizer extends Component {
           document.getElementById(
             `node-${node.row}-${node.col}`
           ).className = toggleClassName(element, "node-visited");
-        }, 1 * i);
+        }, 10 * i);
       }
     }
   }
@@ -148,6 +142,9 @@ export default class PathfindingVisuzlizer extends Component {
     const grid = getInitialGrid();
     this.setState({ grid }, () => console.log(this.state));
   }
+  toggleEraseMode(){
+    this.setState({eraseMode: this.state.eraseMode ? false : true});
+  }
 
   render() {
     const { grid, mouseIsPressed } = this.state;
@@ -156,6 +153,7 @@ export default class PathfindingVisuzlizer extends Component {
         <header>
           <button onClick={() => this.visualizeDijkstra()}>Visualize</button>
           <button onClick={() => this.resetState()}>Reset</button>
+          <button onClick={() => this.toggleEraseMode()}>Erase Mode</button>
         </header>
         <section className="main-body">
           <div className="main-grid">
