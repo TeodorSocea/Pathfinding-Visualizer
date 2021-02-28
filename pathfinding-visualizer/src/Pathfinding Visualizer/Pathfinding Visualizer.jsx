@@ -65,9 +65,17 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseDown(row, col) {
-    if (row == START_NODE_ROW && col == START_NODE_COL && this.state.walling == false) {
+    if (
+      row == START_NODE_ROW &&
+      col == START_NODE_COL &&
+      this.state.walling == false
+    ) {
       this.state.movingStart = true;
-    } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL && this.state.walling == false) {
+    } else if (
+      row == FINISH_NODE_ROW &&
+      col == FINISH_NODE_COL &&
+      this.state.walling == false
+    ) {
       this.state.movingFinish = true;
     } else {
       this.state.walling = true;
@@ -81,27 +89,47 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseEnter(row, col) {
-    if (!this.state.mouseIsPressed && !this.state.walling && !this.state.movingStart && !this.state.movingFinish) return;
-    if (row == START_NODE_ROW && col == START_NODE_COL ) {
+    if (
+      !this.state.mouseIsPressed &&
+      !this.state.walling &&
+      !this.state.movingStart &&
+      !this.state.movingFinish
+    )
+      return;
+    if (row == START_NODE_ROW && col == START_NODE_COL) {
       this.state.movingStart = this.state.walling ? false : true;
-    } else if(this.state.movingStart && !this.state.walling){
+    } else if (this.state.movingStart && !this.state.walling) {
       this.state.grid[row][col].isStart = true;
       this.state.grid[START_NODE_ROW][START_NODE_COL].isStart = false;
-      const oldStart = document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`);
+      const oldStart = document.getElementById(
+        `node-${START_NODE_ROW}-${START_NODE_COL}`
+      );
       const newStart = document.getElementById(`node-${row}-${col}`);
-      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = toggleClassName(oldStart, 'node-start');
-      document.getElementById(`node-${row}-${col}`).className = toggleClassName(newStart, 'node-start');
+      document.getElementById(
+        `node-${START_NODE_ROW}-${START_NODE_COL}`
+      ).className = toggleClassName(oldStart, "node-start");
+      document.getElementById(`node-${row}-${col}`).className = toggleClassName(
+        newStart,
+        "node-start"
+      );
       [START_NODE_ROW, row] = [row, START_NODE_ROW];
       [START_NODE_COL, col] = [col, START_NODE_COL];
     } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
       this.state.movingFinish = this.state.walling ? false : true;
-    } else if (this.state.movingFinish && !this.state.walling){
+    } else if (this.state.movingFinish && !this.state.walling) {
       this.state.grid[row][col].isFinish = true;
       this.state.grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = false;
-      const oldStart = document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`);
+      const oldStart = document.getElementById(
+        `node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`
+      );
       const newStart = document.getElementById(`node-${row}-${col}`);
-      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = toggleClassName(oldStart, 'node-finish');
-      document.getElementById(`node-${row}-${col}`).className = toggleClassName(newStart, 'node-finish');
+      document.getElementById(
+        `node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`
+      ).className = toggleClassName(oldStart, "node-finish");
+      document.getElementById(`node-${row}-${col}`).className = toggleClassName(
+        newStart,
+        "node-finish"
+      );
       [FINISH_NODE_ROW, row] = [row, FINISH_NODE_ROW];
       [FINISH_NODE_COL, col] = [col, FINISH_NODE_COL];
     } else {
@@ -115,7 +143,7 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseUp() {
-    this.setState({ grid: this.state.grid});
+    this.setState({ grid: this.state.grid });
     this.state.mouseIsPressed = false;
     this.state.walling = false;
     this.state.movingStart = false;
@@ -130,9 +158,8 @@ export default class PathfindingVisuzlizer extends Component {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         const element = document.getElementById(`node-${node.row}-${node.col}`);
-        document.getElementById(
-          `node-${node.row}-${node.col}`
-        ).className = 'node node-shortest-path';
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node node-shortest-path";
       }, 20 * i);
     }
   }
@@ -173,7 +200,9 @@ export default class PathfindingVisuzlizer extends Component {
 
   resetState() {
     const grid = getInitialGrid();
-    this.setState({grid: this.state.grid}, () => {this.setState({ grid })});
+    this.setState({ grid: this.state.grid }, () => {
+      this.setState({ grid });
+    });
   }
 
   toggleEraseMode() {

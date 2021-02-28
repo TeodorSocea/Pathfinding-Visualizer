@@ -1,7 +1,7 @@
 .wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 20vh 70vh 10vh;
+  grid-template-rows: 20vh 73vh 7vh;
   -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
   -webkit-user-select: none;
   -ms-user-select: none; /* From IE10 only */
@@ -42,7 +42,9 @@
 
   -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }
-
+footer{
+  background-color: white;
+}
 .button-erase{
   background-color: lightblue;
 }
