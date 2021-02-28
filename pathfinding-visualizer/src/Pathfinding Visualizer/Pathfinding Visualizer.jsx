@@ -155,8 +155,8 @@ export default class PathfindingVisuzlizer extends Component {
           <button onClick={() => this.resetState()}>Reset</button>
           <button onClick={() => this.toggleEraseMode()}>Erase Mode</button>
         </header>
-        <section className="main-body">
-          <div className="main-grid">
+        <section className="main-body" draggable="fase">
+          <div className="main-grid" dragable="false">
             {grid.map((row) => {
               return row.map((node, nodeId) => {
                 const {
@@ -172,6 +172,7 @@ export default class PathfindingVisuzlizer extends Component {
                 } = node;
                 return (
                   <Node
+                    dragable="false"
                     row={row}
                     col={col}
                     isStart={isStart}

@@ -2,6 +2,12 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 20vh 70vh 10vh;
+  -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
+  -webkit-user-select: none;
+  -ms-user-select: none; /* From IE10 only */
+  user-select: none; /* Not valid CSS yet, as of July 2012 */
+
+  -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }
 .main-body {
   display: grid;
@@ -14,6 +20,12 @@
     ". maingrid ."
     ". . .";
   background-color: cornflowerblue;
+  -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
+  -webkit-user-select: none;
+  -ms-user-select: none; /* From IE10 only */
+  user-select: none; /* Not valid CSS yet, as of July 2012 */
+
+  -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }
 .main-grid {
   grid-area: maingrid;
@@ -23,4 +35,10 @@
   grid-template-rows: repeat(20, 1fr);
   row-gap: 2px;
   column-gap: 2px;
+  -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
+  -webkit-user-select: none;
+  -ms-user-select: none; /* From IE10 only */
+  user-select: none; /* Not valid CSS yet, as of July 2012 */
+
+  -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }

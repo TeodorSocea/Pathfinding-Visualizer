@@ -31,7 +31,9 @@ export default class Node extends Component {
     const testClassName = "node-test";
 
     return (
-      <div
+      <div draggable="false"
+        onDragStart="return false"
+        onDragEnd="return false"
         id={`node-${row}-${col}`}
         className={`node ${extraClassName}`}
         onMouseDown={() => onMouseDown(row, col)}
