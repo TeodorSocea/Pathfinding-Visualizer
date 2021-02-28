@@ -4,10 +4,10 @@ import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/dijkstras";
 import "./Pathfinding Visualizer.css";
 import ReactDOM from "react-dom";
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+var START_NODE_ROW = 10;
+var START_NODE_COL = 15;
+var FINISH_NODE_ROW = 10;
+var FINISH_NODE_COL = 35;
 
 const createNode = (col, row) => {
   return {
@@ -35,22 +35,11 @@ const getInitialGrid = () => {
   return grid;
 };
 
-const getNewGridWithWallToggled = (grid, row, col) => {
-  const newGrid = grid.slice();
-  const node = newGrid[row][col];
-  const newNode = {
-    ...node,
-    isWall: !node.isWall,
-  };
-  newGrid[row][col] = newNode;
-  return newGrid;
-};
-
 const toggleClassName = (element, toCheck) => {
   let className = element.className;
   const reg = new RegExp(toCheck);
   if (className.match(reg)) {
-    className.replace(reg, "");
+    className = className.replace(reg, "");
   } else {
     className += " ";
     className += toCheck;
@@ -65,6 +54,9 @@ export default class PathfindingVisuzlizer extends Component {
       grid: [],
       mouseIsPressed: false,
       eraseMode: false,
+      walling: false,
+      movingStart: false,
+      movingFinish: false,
     };
   }
 
@@ -74,22 +66,60 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseDown(row, col) {
-    this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
-    document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
-    this.state.mouseIsPressed = true;
-    
+    if (row == START_NODE_ROW && col == START_NODE_COL && this.state.walling == false) {
+      this.state.movingStart = true;
+    } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL && this.state.walling == false) {
+      this.state.movingFinish = true;
+    } else {
+      this.state.walling = true;
+      this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
+      document.getElementById(`node-${row}-${col}`).className = this.state
+        .eraseMode
+        ? "node"
+        : "node node-wall";
+      this.state.mouseIsPressed = true;
+    }
   }
 
   handleMouseEnter(row, col) {
-    if (!this.state.mouseIsPressed) return;
-    this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
-    const element = document.getElementById(`node-${row}-${col}`);
-    document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
-    
+    if (!this.state.mouseIsPressed && !this.state.walling && !this.state.movingStart && !this.state.movingFinish) return;
+    if (row == START_NODE_ROW && col == START_NODE_COL) {
+      this.state.movingStart = true;
+    } else if(this.state.movingStart){
+      this.state.grid[row][col].isStart = true;
+      this.state.grid[START_NODE_ROW][START_NODE_COL].isStart = false;
+      const oldStart = document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`);
+      const newStart = document.getElementById(`node-${row}-${col}`);
+      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = toggleClassName(oldStart, 'node-start');
+      document.getElementById(`node-${row}-${col}`).className = toggleClassName(newStart, 'node-start');
+      [START_NODE_ROW, row] = [row, START_NODE_ROW];
+      [START_NODE_COL, col] = [col, START_NODE_COL];
+    } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
+      this.state.movingFinish = true;
+    } else if (this.state.movingFinish){
+      this.state.grid[row][col].isFinish = true;
+      this.state.grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = false;
+      const oldStart = document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`);
+      const newStart = document.getElementById(`node-${row}-${col}`);
+      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = toggleClassName(oldStart, 'node-finish');
+      document.getElementById(`node-${row}-${col}`).className = toggleClassName(newStart, 'node-finish');
+      [FINISH_NODE_ROW, row] = [row, FINISH_NODE_ROW];
+      [FINISH_NODE_COL, col] = [col, FINISH_NODE_COL];
+    } else {
+      this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
+      const element = document.getElementById(`node-${row}-${col}`);
+      document.getElementById(`node-${row}-${col}`).className = this.state
+        .eraseMode
+        ? "node"
+        : "node node-wall";
+    }
   }
 
   handleMouseUp() {
     this.state.mouseIsPressed = false;
+    this.state.walling = false;
+    this.state.movingStart = false;
+    this.state.movingFinish = false;
     this.setState({ grid: this.state.grid});
   }
 
@@ -135,7 +165,6 @@ export default class PathfindingVisuzlizer extends Component {
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    //console.log(visitedNodesInOrder);
     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder, grid);
   }
 
@@ -143,19 +172,36 @@ export default class PathfindingVisuzlizer extends Component {
     const grid = getInitialGrid();
     this.setState({ grid }, () => console.log(this.state));
   }
-  toggleEraseMode(){
-    this.setState({eraseMode: this.state.eraseMode ? false : true});
+
+  toggleEraseMode() {
+    this.setState({ eraseMode: this.state.eraseMode ? false : true });
+    const element = document.getElementById("eraser");
+    document.getElementById("eraser").className = toggleClassName(
+      element,
+      "button-erase-on"
+    );
   }
 
   render() {
     const { grid, mouseIsPressed } = this.state;
-    window.addEventListener('mouseup', ()=>{this.state.mouseIsPressed=false});
+    window.addEventListener("mouseup", () => {
+      this.state.mouseIsPressed = false;
+      this.state.walling = false;
+      this.state.movingStart = false;
+      this.state.movingFinish = false;
+    });
     return (
       <div className="wrapper" draggable="false">
         <header>
           <button onClick={() => this.visualizeDijkstra()}>Visualize</button>
           <button onClick={() => this.resetState()}>Reset</button>
-          <button onClick={() => this.toggleEraseMode()}>Erase Mode</button>
+          <button
+            id="eraser"
+            className="button-erase"
+            onClick={() => this.toggleEraseMode()}
+          >
+            Erase Mode
+          </button>
         </header>
         <section className="main-body" draggable="fase">
           <div className="main-grid" dragable="false">

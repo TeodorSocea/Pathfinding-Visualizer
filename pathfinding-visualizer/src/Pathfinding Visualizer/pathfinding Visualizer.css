@@ -42,3 +42,10 @@
 
   -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }
+
+.button-erase{
+  background-color: lightblue;
+}
+.button-erase-on{
+  background-color: red;
+}
