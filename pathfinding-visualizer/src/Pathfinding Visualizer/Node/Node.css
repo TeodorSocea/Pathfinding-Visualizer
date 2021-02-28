@@ -5,22 +5,145 @@
   background-color: black;
 }
 
-.node-visited {
-  background-color: blueviolet;
+.node-visited{
+  animation-name: visitedAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(.3);
+    background-color: blueviolet;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: blueviolet;
+  }
+
+  100% {
+    transform: scale(1.0);
+    background-color: blueviolet;
+  }
 }
 
 .node-shortest-path {
   background-color: yellow;
 }
-
-.node-wall {
-  background-color: gray;
+.node-shortest-path{
+  animation-name: shortestPathAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
-.node-start {
-  background-color: green;
+@keyframes shortestPathAnimation {
+  0% {
+    transform: scale(.3);
+    background-color: yellow;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: yellow;
+  }
+
+  100% {
+    transform: scale(1.0);
+    background-color: yellow;
+  }
 }
 
-.node-finish {
-  background-color: blue;
+.node-wall{
+  animation-name: wallAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes wallAnimation {
+  0% {
+    transform: scale(.3);
+    background-color: rgb(12, 53, 71);
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: rgb(12, 53, 71);
+  }
+
+  100% {
+    transform: scale(1.0);
+    background-color: rgb(12, 53, 71);
+  }
+}
+
+.node-start{
+  animation-name: startAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes startAnimation {
+  0% {
+    transform: scale(.3);
+    background-color: green;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: green;
+  }
+
+  100% {
+    transform: scale(1.0);
+    background-color: green;
+  }
+}
+
+.node-finish{
+  animation-name: finishAnimation;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes finishAnimation {
+  0% {
+    transform: scale(.3);
+    background-color: blue;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: blue;
+  }
+
+  100% {
+    transform: scale(1.0);
+    background-color: blue;
+  }
 }

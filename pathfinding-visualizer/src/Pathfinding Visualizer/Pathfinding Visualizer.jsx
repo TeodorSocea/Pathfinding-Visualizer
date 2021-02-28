@@ -77,7 +77,7 @@ export default class PathfindingVisuzlizer extends Component {
     this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
     document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
     this.state.mouseIsPressed = true;
-    //this.setState({ grid: newGrid, mouseIsPressed: true });
+    
   }
 
   handleMouseEnter(row, col) {
@@ -85,11 +85,12 @@ export default class PathfindingVisuzlizer extends Component {
     this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
     const element = document.getElementById(`node-${row}-${col}`);
     document.getElementById(`node-${row}-${col}`).className = this.state.eraseMode ? 'node' : 'node node-wall';
-    //this.setState({ grid: newGrid });
+    
   }
 
   handleMouseUp() {
-    this.setState({ grid: this.state.grid, mouseIsPressed: false });
+    this.state.mouseIsPressed = false;
+    this.setState({ grid: this.state.grid});
   }
 
   animateShortestPath(nodesInShortestPathOrder, grid) {
@@ -103,7 +104,7 @@ export default class PathfindingVisuzlizer extends Component {
         document.getElementById(
           `node-${node.row}-${node.col}`
         ).className = toggleClassName(element, "node-shortest-path");
-      }, 10 * i);
+      }, 20 * i);
     }
   }
 
@@ -148,6 +149,7 @@ export default class PathfindingVisuzlizer extends Component {
 
   render() {
     const { grid, mouseIsPressed } = this.state;
+    window.addEventListener('mouseup', ()=>{this.state.mouseIsPressed=false});
     return (
       <div className="wrapper" draggable="false">
         <header>
@@ -172,7 +174,6 @@ export default class PathfindingVisuzlizer extends Component {
                 } = node;
                 return (
                   <Node
-                    dragable="false"
                     row={row}
                     col={col}
                     isStart={isStart}
