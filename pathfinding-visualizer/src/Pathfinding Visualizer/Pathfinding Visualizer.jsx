@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Node from "./Node/Node";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/dijkstras";
 import "./Pathfinding Visualizer.css";
-import ReactDOM from "react-dom";
 
 var START_NODE_ROW = 10;
 var START_NODE_COL = 15;
@@ -83,9 +82,9 @@ export default class PathfindingVisuzlizer extends Component {
 
   handleMouseEnter(row, col) {
     if (!this.state.mouseIsPressed && !this.state.walling && !this.state.movingStart && !this.state.movingFinish) return;
-    if (row == START_NODE_ROW && col == START_NODE_COL) {
-      this.state.movingStart = true;
-    } else if(this.state.movingStart){
+    if (row == START_NODE_ROW && col == START_NODE_COL ) {
+      this.state.movingStart = this.state.walling ? false : true;
+    } else if(this.state.movingStart && !this.state.walling){
       this.state.grid[row][col].isStart = true;
       this.state.grid[START_NODE_ROW][START_NODE_COL].isStart = false;
       const oldStart = document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`);
@@ -95,8 +94,8 @@ export default class PathfindingVisuzlizer extends Component {
       [START_NODE_ROW, row] = [row, START_NODE_ROW];
       [START_NODE_COL, col] = [col, START_NODE_COL];
     } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
-      this.state.movingFinish = true;
-    } else if (this.state.movingFinish){
+      this.state.movingFinish = this.state.walling ? false : true;
+    } else if (this.state.movingFinish && !this.state.walling){
       this.state.grid[row][col].isFinish = true;
       this.state.grid[FINISH_NODE_ROW][FINISH_NODE_COL].isFinish = false;
       const oldStart = document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`);
@@ -116,24 +115,24 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   handleMouseUp() {
+    this.setState({ grid: this.state.grid});
     this.state.mouseIsPressed = false;
     this.state.walling = false;
     this.state.movingStart = false;
     this.state.movingFinish = false;
-    this.setState({ grid: this.state.grid});
   }
 
   animateShortestPath(nodesInShortestPathOrder, grid) {
     setTimeout(() => {
       this.setState({ grid });
-    }, nodesInShortestPathOrder.length * 10 + 1000);
+    }, nodesInShortestPathOrder.length * 20);
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         const element = document.getElementById(`node-${node.row}-${node.col}`);
         document.getElementById(
           `node-${node.row}-${node.col}`
-        ).className = toggleClassName(element, "node-shortest-path");
+        ).className = 'node node-shortest-path';
       }, 20 * i);
     }
   }
@@ -164,13 +163,17 @@ export default class PathfindingVisuzlizer extends Component {
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    visitedNodesInOrder.pop();
+    visitedNodesInOrder.shift();
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    nodesInShortestPathOrder.pop();
+    nodesInShortestPathOrder.shift();
     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder, grid);
   }
 
   resetState() {
     const grid = getInitialGrid();
-    this.setState({ grid }, () => console.log(this.state));
+    this.setState({grid: this.state.grid}, () => {this.setState({ grid })});
   }
 
   toggleEraseMode() {
