@@ -1,5 +1,5 @@
 .node {
-  background-color: white;
+  background-color: rgb(245, 255, 253);
 }
 .node:hover {
   background-color: black;

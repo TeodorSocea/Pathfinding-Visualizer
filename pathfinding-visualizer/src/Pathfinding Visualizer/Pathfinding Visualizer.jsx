@@ -149,8 +149,7 @@ export default class PathfindingVisuzlizer extends Component {
         ).className = toggleClassName(newStart, "node-start");
         [START_NODE_ROW, row] = [row, START_NODE_ROW];
         [START_NODE_COL, col] = [col, START_NODE_COL];
-        if(!!this.state.redoDijkstra)
-          this.redoDijkstra();
+        if (!!this.state.redoDijkstra) this.redoDijkstra();
       }
     } else if (row == FINISH_NODE_ROW && col == FINISH_NODE_COL) {
       this.state.movingFinish = this.state.walling ? false : true;
@@ -173,8 +172,7 @@ export default class PathfindingVisuzlizer extends Component {
         ).className = toggleClassName(newStart, "node-finish");
         [FINISH_NODE_ROW, row] = [row, FINISH_NODE_ROW];
         [FINISH_NODE_COL, col] = [col, FINISH_NODE_COL];
-        if(!!this.state.redoDijkstra)
-          this.redoDijkstra();
+        if (!!this.state.redoDijkstra) this.redoDijkstra();
       }
     } else {
       this.state.grid[row][col].isWall = this.state.eraseMode ? false : true;
@@ -230,7 +228,7 @@ export default class PathfindingVisuzlizer extends Component {
   }
 
   visualizeDijkstra() {
-    this.state.redoDijkstra=true;
+    this.state.redoDijkstra = true;
     this.removeOldRun();
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -301,16 +299,31 @@ export default class PathfindingVisuzlizer extends Component {
     return (
       <div className="wrapper" draggable="false">
         <header>
-          <button onClick={() => this.visualizeDijkstra()}>Visualize</button>
-          <button onClick={() => this.resetState()}>Reset</button>
-          <button onClick={() => {this.removeOldRun(); this.state.redoDijkstra=false}}>Remove old run</button>
-          <button
-            id="eraser"
-            className="button-erase"
-            onClick={() => this.toggleEraseMode()}
-          >
-            Erase Mode
-          </button>
+          <div className="header-wrapper">
+            <div className="title"><p>Pathfinding Visualizer</p></div>
+            <div className="buttons">
+              <button onClick={() => this.visualizeDijkstra()}>
+                Visualize
+              </button>
+              <button onClick={() => this.resetState()}>Reset</button>
+              <button
+                onClick={() => {
+                  this.removeOldRun();
+                  this.state.redoDijkstra = false;
+                }}
+              >
+                Remove old run
+              </button>
+              <button
+                id="eraser"
+                className="button-erase"
+                onClick={() => this.toggleEraseMode()}
+              >
+                Erase Mode: {this.state.eraseMode ? 'ON' : 'OFF'}
+              </button>
+            </div>
+          </div>
+          <div className="legend">LEGEND</div>
         </header>
         <section className="main-body" draggable="fase">
           <div className="main-grid" dragable="false">

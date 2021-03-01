@@ -19,7 +19,7 @@
     ". . . "
     ". maingrid ."
     ". . .";
-  background-color: cornflowerblue;
+  background-color: rgb(245, 255, 253);
   -moz-user-select: none; /* These user-select properties are inheritable, used to prevent text selection */
   -webkit-user-select: none;
   -ms-user-select: none; /* From IE10 only */
@@ -42,12 +42,72 @@
 
   -webkit-user-drag: none; /* Prevents dragging of images/divs etc */
 }
-footer{
-  background-color: white;
+footer {
+  background-color: rgb(245, 255, 253);
 }
-.button-erase{
+header {
+  background-color: rgb(245, 255, 253);
+  display: grid;
+  grid-template-rows: 35% 65%;
+}
+.header-wrapper {
+  display: grid;
+  background-color: rgb(44, 64, 102);
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 100%;
+  color: white;
+  grid-template-areas: "ttl btts";
+}
+.title {
+  grid-area: ttl;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 3vh;
+  letter-spacing: 0px;
+  word-spacing: 5.6px;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: capitalize;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.title p{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.buttons {
+  margin-left: auto;
+  margin-right: 5%;
+  grid-area: btts;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.legend {
+}
+button {
+  height: 4.2vh;
+  border: none;
+  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 7px;
+  background-color: rgb(105, 224, 214);
+  color: white;
+  font-size: 2.3vh;
+}
+button:hover {
+  background-color: rgb(74, 212, 81);
+}
+button:active {
+  background-color: cadetblue;
+}
+.button-erase {
   background-color: lightblue;
 }
-.button-erase-on{
-  background-color: red;
+.button-erase-on {
+  background-color: purple;
 }
