@@ -134,16 +134,16 @@
 @keyframes finishAnimation {
   0% {
     transform: scale(.3);
-    background-color: blue;
+    background-color: orange;
   }
 
   50% {
     transform: scale(1.2);
-    background-color: blue;
+    background-color: orange;
   }
 
   100% {
     transform: scale(1.0);
-    background-color: blue;
+    background-color: orange;
   }
 }
