@@ -101,6 +101,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+  cursor: pointer;
 }
 
 @keyframes startAnimation {
@@ -129,6 +130,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
+  cursor: pointer;
 }
 
 @keyframes finishAnimation {
