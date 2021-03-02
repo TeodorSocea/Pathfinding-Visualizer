@@ -298,9 +298,16 @@ export default class PathfindingVisuzlizer extends Component {
     });
     return (
       <div className="wrapper" draggable="false">
+        <link
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          media="screen"
+        />
         <header>
           <div className="header-wrapper">
-            <div className="title"><p>Pathfinding Visualizer</p></div>
+            <div className="title">
+              <p>Pathfinding Visualizer</p>
+            </div>
             <div className="buttons">
               <button onClick={() => this.visualizeDijkstra()}>
                 Visualize
@@ -319,7 +326,7 @@ export default class PathfindingVisuzlizer extends Component {
                 className="button-erase"
                 onClick={() => this.toggleEraseMode()}
               >
-                Erase Mode: {this.state.eraseMode ? 'ON' : 'OFF'}
+                Erase Mode: {this.state.eraseMode ? "ON" : "OFF"}
               </button>
             </div>
           </div>
@@ -360,7 +367,26 @@ export default class PathfindingVisuzlizer extends Component {
             })}
           </div>
         </section>
-        <footer>poggest</footer>
+        <footer>
+          <a
+            href="https://github.com/TeodorSocea"
+            target="_blank"
+            className="social-links github"
+          >
+            <button>
+              <i class="fa fa-github"></i>
+            </button>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/teodor-socea-b3946a205/"
+            target="_blank"
+            className="social-links linkedin"
+          >
+            <button>
+              <i class="fa fa-linkedin"></i>
+            </button>
+          </a>
+        </footer>
       </div>
     );
   }
