@@ -34,6 +34,32 @@ const getInitialGrid = () => {
   return grid;
 };
 
+const createDefaultNode = (col, row) => {
+  return {
+    row,
+    col,
+    isStart: row === 10 && col === 15,
+    isFinish: row === 10 && col === 35,
+    isVisited: false,
+    isShortestPath: false,
+    isWall: false,
+    distance: Infinity,
+    previousNode: null,
+  };
+};
+
+const getDefaultGrid = () => {
+  const grid = [];
+  for (let row = 0; row < 20; row++) {
+    const currentRow = [];
+    for (let col = 0; col < 50; col++) {
+      currentRow.push(createDefaultNode(col, row));
+    }
+    grid.push(currentRow);
+  }
+  return grid;
+};
+
 const toggleClassName = (element, toCheck) => {
   let className = element.className;
   const reg = new RegExp(toCheck);
@@ -57,11 +83,12 @@ export default class PathfindingVisuzlizer extends Component {
       movingStart: false,
       movingFinish: false,
       redoDijkstra: false,
+      isActive: false,
     };
   }
 
   componentDidMount() {
-    const grid = getInitialGrid();
+    const grid = getDefaultGrid();
     this.setState({ grid });
   }
 
@@ -194,7 +221,13 @@ export default class PathfindingVisuzlizer extends Component {
 
   animateShortestPath(nodesInShortestPathOrder, grid) {
     setTimeout(() => {
-      this.setState({ grid }, () => console.log(this.state));
+      this.setState({ grid }, () => {
+        this.state.isActive = false;
+        const arr = document.getElementsByTagName("BUTTON");
+        for (let i = 0; i < arr.length; i++) {
+          arr[i].className = toggleClassName(arr[i], "button-inactive");
+        }
+      });
     }, nodesInShortestPathOrder.length * 20);
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -229,6 +262,11 @@ export default class PathfindingVisuzlizer extends Component {
 
   visualizeDijkstra() {
     this.state.redoDijkstra = true;
+    const arr = document.getElementsByTagName("BUTTON");
+    for (let i = 0; i < arr.length; i++) {
+      arr[i].className = toggleClassName(arr[i], "button-inactive");
+    }
+    this.state.isActive = true;
     this.removeOldRun();
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
@@ -279,6 +317,17 @@ export default class PathfindingVisuzlizer extends Component {
     });
   }
 
+  defaultState(){
+    const grid = getDefaultGrid();
+    START_NODE_ROW = 10;
+    START_NODE_COL = 15;
+    FINISH_NODE_ROW = 10;
+    FINISH_NODE_COL = 35;
+    this.setState({grid: this.state.grid}, () => {
+      this.setState({grid: grid, redoDijkstra: false});
+    });
+  }
+
   toggleEraseMode() {
     this.setState({ eraseMode: this.state.eraseMode ? false : true });
     const element = document.getElementById("eraser");
@@ -309,14 +358,33 @@ export default class PathfindingVisuzlizer extends Component {
               <p>Pathfinding Visualizer</p>
             </div>
             <div className="buttons">
-              <button onClick={() => this.visualizeDijkstra()}>
-                Visualize
-              </button>
-              <button onClick={() => this.resetState()}>Reset</button>
               <button
                 onClick={() => {
-                  this.removeOldRun();
-                  this.state.redoDijkstra = false;
+                  if (this.state.isActive == false) this.visualizeDijkstra();
+                }}
+              >
+                Visualize
+              </button>
+              <button
+                onClick={() => {
+                  if (this.state.isActive == false) this.resetState();
+                }}
+              >
+                Clear Grid
+              </button>
+              <button
+                onClick={() => {
+                  if (this.state.isActive == false) this.defaultState();
+                }}
+              >
+                Default Grid
+              </button>
+              <button
+                onClick={() => {
+                  if (this.state.isActive == false) {
+                    this.removeOldRun();
+                    this.state.redoDijkstra = false;
+                  }
                 }}
               >
                 Remove old run
@@ -324,7 +392,9 @@ export default class PathfindingVisuzlizer extends Component {
               <button
                 id="eraser"
                 className="button-erase"
-                onClick={() => this.toggleEraseMode()}
+                onClick={() => {
+                  if (this.state.isActive == false) this.toggleEraseMode();
+                }}
               >
                 Erase Mode: {this.state.eraseMode ? "ON" : "OFF"}
               </button>
@@ -358,9 +428,17 @@ export default class PathfindingVisuzlizer extends Component {
                     isShortestPath={isShortestPath}
                     distance={distance}
                     previousNode={previousNode}
-                    onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                    onMouseEnter={(row, col) => this.handleMouseEnter(row, col)}
-                    onMouseUp={() => this.handleMouseUp()}
+                    onMouseDown={(row, col) => {
+                      if (this.state.isActive == false)
+                        this.handleMouseDown(row, col);
+                    }}
+                    onMouseEnter={(row, col) => {
+                      if (this.state.isActive == false)
+                        this.handleMouseEnter(row, col);
+                    }}
+                    onMouseUp={() => {
+                      if (this.state.isActive == false) this.handleMouseUp();
+                    }}
                   ></Node>
                 );
               });
@@ -373,18 +451,14 @@ export default class PathfindingVisuzlizer extends Component {
             target="_blank"
             className="social-links github"
           >
-            <button>
-              <i class="fa fa-github"></i>
-            </button>
+            <i class="fa fa-github"></i>
           </a>
           <a
             href="https://www.linkedin.com/in/teodor-socea-b3946a205/"
             target="_blank"
             className="social-links linkedin"
           >
-            <button>
-              <i class="fa fa-linkedin"></i>
-            </button>
+            <i class="fa fa-linkedin"></i>
           </a>
         </footer>
       </div>

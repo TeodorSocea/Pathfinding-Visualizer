@@ -110,9 +110,12 @@ button:active {
 .button-erase-on {
   background-color: purple;
 }
+.button-inactive{
+  background-color: gray !important;
+}
 footer{
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 3fr;
+  grid-template-columns: 6fr 1fr 1fr 6fr;
   grid-template-rows: 100%;
   grid-template-areas: ". git li .";
 }
@@ -125,3 +128,4 @@ footer{
 .linkedin{
   grid-area: li;
 }
+
