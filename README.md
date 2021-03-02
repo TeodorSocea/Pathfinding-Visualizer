@@ -4,6 +4,7 @@
 </br></br>
 A web aplication for visualizing various pathfinding algorithms.
 <br>
-Hosted at https://pathfinding-visualizer-st.web.app/ . </br>
+Hosted at https://pathfinding-visualizer-st.web.app/.
 ## Using the app
+Press Start
 
