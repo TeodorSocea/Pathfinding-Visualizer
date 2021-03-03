@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Node from "./Node/Node";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/dijkstras";
 import "./Pathfinding Visualizer.css";
+import { Dialog } from "@reach/dialog";
+
 var START_NODE_ROW = 10;
 var START_NODE_COL = 15;
 var FINISH_NODE_ROW = 10;
@@ -83,6 +85,7 @@ export default class PathfindingVisuzlizer extends Component {
       movingFinish: false,
       redoDijkstra: false,
       isActive: false,
+      overlay: false,
     };
   }
 
@@ -316,14 +319,14 @@ export default class PathfindingVisuzlizer extends Component {
     });
   }
 
-  defaultState(){
+  defaultState() {
     const grid = getDefaultGrid();
     START_NODE_ROW = 10;
     START_NODE_COL = 15;
     FINISH_NODE_ROW = 10;
     FINISH_NODE_COL = 35;
-    this.setState({grid: this.state.grid}, () => {
-      this.setState({grid: grid, redoDijkstra: false});
+    this.setState({ grid: this.state.grid }, () => {
+      this.setState({ grid: grid, redoDijkstra: false });
     });
   }
 
@@ -335,7 +338,6 @@ export default class PathfindingVisuzlizer extends Component {
       "button-erase-on"
     );
   }
-
   render() {
     const { grid, mouseIsPressed } = this.state;
     window.addEventListener("mouseup", () => {
@@ -380,6 +382,14 @@ export default class PathfindingVisuzlizer extends Component {
               </button>
               <button
                 onClick={() => {
+                  if (this.state.isActive == false)
+                    this.setState({ overlay: true });
+                }}
+              >
+                Overlay
+              </button>
+              <button
+                onClick={() => {
                   if (this.state.isActive == false) {
                     this.removeOldRun();
                     this.state.redoDijkstra = false;
@@ -405,7 +415,7 @@ export default class PathfindingVisuzlizer extends Component {
               <p>Start Node</p>
             </div>
             <div className="f-container">
-            <div className="finish-container"></div>
+              <div className="finish-container"></div>
               <p>End Node</p>
             </div>
             <div className="p-container">
@@ -422,6 +432,14 @@ export default class PathfindingVisuzlizer extends Component {
             </div>
           </div>
         </header>
+        <Dialog isOpen={this.state.overlay}>
+          <div className="overlay-wrapper">
+            WORK IN PROGRESS
+            <button onClick={() => this.setState({ overlay: false })}>
+              Okay
+            </button>
+          </div>
+        </Dialog>
         <section className="main-body" draggable="fase">
           <div className="main-grid" dragable="false">
             {grid.map((row) => {

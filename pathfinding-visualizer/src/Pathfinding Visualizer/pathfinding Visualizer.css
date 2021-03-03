@@ -1,3 +1,6 @@
+body{
+  width: 100vw !important;
+}
 .wrapper {
   display: grid;
   grid-template-columns: 1fr;
@@ -105,8 +108,6 @@ p{
   text-align: left;
 }
 .s-container{
-  border-color: cornflowerblue;
-  border-radius: 199px;
   display: grid;
   grid-template-columns: 2vw auto;
   grid-area: s;
@@ -199,5 +200,47 @@ footer{
 }
 .linkedin{
   grid-area: li;
+}
+/* This code is subject to LICENSE in root of this repository */
+
+/* Used to detect in JavaScript if apps have loaded styles or not. */
+:root {
+  --reach-dialog: 1;
+}
+
+[data-reach-dialog-overlay] {
+  background: hsla(0, 0%, 0%, 0.33);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+[data-reach-dialog-content] {
+  display: grid;
+  grid-template-columns: 5% 90% 5%;
+  grid-template-rows: 5% 90% 5%;
+  grid-template-areas: ". . ."
+             ". owrap ."
+             ". . .";
+  width: 50vw;
+  height: 50vh;
+  margin: 10vh auto;
+  background: white;
+  padding: 2rem;
+  outline: none;
+  text-align: center;
+  font-weight: 900;
+}
+.overlay-wrapper{
+  display: grid;
+  grid-area: owrap ;
+  grid-template-columns: 1fr;
+  grid-template-rows: 80% 20%;
+}
+.overlay-wrapper img{
+  width: 25vw;
 }
 
