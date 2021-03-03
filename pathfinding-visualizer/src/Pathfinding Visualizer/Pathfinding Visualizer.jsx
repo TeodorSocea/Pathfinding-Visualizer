@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Node from "./Node/Node";
 import { dijkstra, getNodesInShortestPathOrder } from "../Algorithms/dijkstras";
 import "./Pathfinding Visualizer.css";
-
 var START_NODE_ROW = 10;
 var START_NODE_COL = 15;
 var FINISH_NODE_ROW = 10;
@@ -387,7 +386,7 @@ export default class PathfindingVisuzlizer extends Component {
                   }
                 }}
               >
-                Remove old run
+                Clear Previous Run
               </button>
               <button
                 id="eraser"
@@ -400,7 +399,28 @@ export default class PathfindingVisuzlizer extends Component {
               </button>
             </div>
           </div>
-          <div className="legend">LEGEND</div>
+          <div className="legend">
+            <div className="s-container">
+              <div className="start-container"></div>
+              <p>Start Node</p>
+            </div>
+            <div className="f-container">
+            <div className="finish-container"></div>
+              <p>End Node</p>
+            </div>
+            <div className="p-container">
+              <div className="path-container"></div>
+              <p>Shortest Path</p>
+            </div>
+            <div className="v-container">
+              <div className="visited-container"></div>
+              <p>Visited Node</p>
+            </div>
+            <div className="w-container">
+              <div className="wall-container"></div>
+              <p>Wall</p>
+            </div>
+          </div>
         </header>
         <section className="main-body" draggable="fase">
           <div className="main-grid" dragable="false">

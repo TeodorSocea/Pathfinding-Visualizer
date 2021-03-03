@@ -73,8 +73,10 @@ header {
   margin-bottom: auto;
 }
 .title p{
+  text-align: center;
   margin-top: auto;
   margin-bottom: auto;
+  font-weight: 700;
 }
 .buttons {
   margin-left: auto;
@@ -84,6 +86,76 @@ header {
   margin-bottom: auto;
 }
 .legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2vw 2vw 2vw;
+  grid-template-areas:". . . . . . ."
+                      ". s f p v w ."
+                      ". . . . . . .";
+  row-gap: 0.5vh;
+  column-gap: 3vh;
+  justify-content: space-evenly;
+}
+p{
+  font-weight: 500;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 1vw;
+  text-align: left;
+}
+.s-container{
+  border-color: cornflowerblue;
+  border-radius: 199px;
+  display: grid;
+  grid-template-columns: 2vw auto;
+  grid-area: s;
+}
+.f-container{
+  display: grid;
+  grid-template-columns: 2vw auto;
+  grid-template-rows: 2vw;
+  grid-area: f;
+}
+.p-container{
+  display: grid;
+  grid-template-columns: 2vw auto;
+  grid-area: p;
+}
+.v-container{
+  display: grid;
+  grid-template-columns: 2vw auto;
+  grid-area: v;
+}
+.w-container{
+  display: grid;
+  grid-template-columns: 2vw auto;
+  grid-area: w;
+}
+.finish-container{
+  background-color: orange;
+  width: 2vw;
+  height: 2vw;
+}
+.start-container{
+  background-color: blueviolet;
+  width: 2vw;
+  height: 2vw;
+}
+.path-container{
+  background-color: yellow;
+  width: 2vw;
+  height: 2vw;
+}
+.visited-container{
+  background-color: turquoise;
+  width: 2vw;
+  height: 2vw;
+}
+.wall-container{
+  background-color: rgb(12, 53, 71);
+  width: 2vw;
+  height: 2vw;
 }
 button {
   height: 4.2vh;
