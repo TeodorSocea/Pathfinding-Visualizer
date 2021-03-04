@@ -225,22 +225,50 @@ footer{
   grid-template-areas: ". . ."
              ". owrap ."
              ". . .";
-  width: 50vw;
-  height: 50vh;
+  width: 40vw;
+  height: 70vh;
   margin: 10vh auto;
   background: white;
   padding: 2rem;
   outline: none;
   text-align: center;
   font-weight: 900;
+  border-radius: 10px;
 }
 .overlay-wrapper{
   display: grid;
   grid-area: owrap ;
   grid-template-columns: 1fr;
-  grid-template-rows: 80% 20%;
+  grid-template-rows: 5% 75% 10% 10%;
 }
 .overlay-wrapper img{
-  width: 25vw;
+  margin-top: 3vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20vw;
+}
+.overlay-wrapper p{
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 3vh;
+  letter-spacing: 0px;
+  word-spacing: 5.6px;
+  color: black;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: capitalize;
+}
+.overlay-wrapper h{
+  text-align: center;
+  font-size: 2vh;
+  font-weight: 550;
+}
+.overlay-wrapper button{
+  margin-left: auto;
+  margin-right: auto;
 }
 

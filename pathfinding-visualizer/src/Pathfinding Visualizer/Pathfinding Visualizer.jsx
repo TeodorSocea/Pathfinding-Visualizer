@@ -85,7 +85,12 @@ export default class PathfindingVisuzlizer extends Component {
       movingFinish: false,
       redoDijkstra: false,
       isActive: false,
-      overlay: false,
+      overlay: true,
+      tutorial1: false,
+      tutorial2: false,
+      tutorial3: false,
+      tutorial4: false,
+      tutorial5: false,
     };
   }
 
@@ -382,14 +387,6 @@ export default class PathfindingVisuzlizer extends Component {
               </button>
               <button
                 onClick={() => {
-                  if (this.state.isActive == false)
-                    this.setState({ overlay: true });
-                }}
-              >
-                Overlay
-              </button>
-              <button
-                onClick={() => {
                   if (this.state.isActive == false) {
                     this.removeOldRun();
                     this.state.redoDijkstra = false;
@@ -434,9 +431,86 @@ export default class PathfindingVisuzlizer extends Component {
         </header>
         <Dialog isOpen={this.state.overlay}>
           <div className="overlay-wrapper">
-            WORK IN PROGRESS
-            <button onClick={() => this.setState({ overlay: false })}>
-              Okay
+            <p>Welcome to Pathfinding Visualizer</p>
+            <img src="./images/Final.svg"></img>
+            <h>
+              Web application developed by Teodor Socea to provide a visual
+              representation of various pathfinding algorithms.
+            </h>
+            <button
+              onClick={() => this.setState({ overlay: false, tutorial1: true })}
+            >
+              Next
+            </button>
+          </div>
+        </Dialog>
+        <Dialog isOpen={this.state.tutorial1}>
+          <div className="overlay-wrapper">
+            <p>Getting Started</p>
+            <img src="https://media.giphy.com/media/GQyYVmKQuBS8CqoHYZ/giphy.gif"></img>
+            <h>Click the grid to draw some walls!</h>
+            <button
+              onClick={() =>
+                this.setState({ tutorial1: false, tutorial4: true })
+              }
+            >
+              Next
+            </button>
+          </div>
+        </Dialog>
+        <Dialog isOpen={this.state.tutorial4}>
+          <div className="overlay-wrapper">
+            <p>Oops!</p>
+            <img src="https://media.giphy.com/media/7ym3c5QgIIDsUb8QIm/giphy.gif"></img>
+            <h>Made a mistake? Reset the grid, go back to default or enable Erase Mode. Don't forget to turn it off!</h>
+            <button
+              onClick={() =>
+                this.setState({ tutorial4: false, tutorial2: true })
+              }
+            >
+              Next
+            </button>
+          </div>
+        </Dialog>
+        <Dialog isOpen={this.state.tutorial2}>
+          <div className="overlay-wrapper">
+            <p>Start/Finish nodes</p>
+            <img src="https://media.giphy.com/media/hnevaLU8Y2G8P5tQoz/giphy.gif"></img>
+            <h>Move the nodes to wherever you like on the grid!</h>
+            <button
+              onClick={() =>
+                this.setState({ tutorial2: false, tutorial3: true})
+              }
+            >
+              Next
+            </button>
+          </div>
+        </Dialog>
+        <Dialog isOpen={this.state.tutorial3}>
+          <div className="overlay-wrapper">
+            <p>Visualize!</p>
+            <img src="https://media.giphy.com/media/m9WYeGY4jf9kxK2pG5/giphy.gif"></img>
+            <h>When you're done, press the button and watch it go!</h>
+            <button
+              onClick={() =>
+                this.setState({ tutorial3: false, tutorial5: true})
+              }
+            >
+              Next
+            </button>
+          </div>
+        </Dialog>
+        <Dialog isOpen={this.state.tutorial5}>
+          <div className="overlay-wrapper">
+            <p>Shortest Path</p>
+            <img src="https://media.giphy.com/media/69cLvntCKaL6WrUT4I/giphy.gif"></img>
+            <h>Try moving the nodes and watch it update in real time!</h>
+            <button
+              onClick={() =>
+                this.setState({ tutorial5: false})
+              }
+            >
+              Do it yourself!
             </button>
           </div>
         </Dialog>
